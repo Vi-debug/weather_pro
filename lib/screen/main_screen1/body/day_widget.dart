@@ -5,8 +5,10 @@ class DayWidget extends StatelessWidget {
   final DayForecast forecast;
   final String day;
   final bool isTomorrow;
+  final bool isToday;
 
-  const DayWidget({Key key, this.forecast, this.day, this.isTomorrow})
+  const DayWidget(
+      {Key key, this.forecast, this.day, this.isTomorrow, this.isToday})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,11 @@ class DayWidget extends StatelessWidget {
           forecast.img,
           CustomText(
             text: (isTomorrow == null || isTomorrow == false)
-                ? '  Thứ ${forecast.weekday + 1}'
+                ? ((isToday == null || isToday == false)
+                    ? (forecast.weekday != 7
+                        ? '  Thứ ${forecast.weekday + 1}'
+                        : '  Chủ nhật')
+                    : '  Hôm nay')
                 : '  Ngày mai',
           ),
           Expanded(child: Container()),

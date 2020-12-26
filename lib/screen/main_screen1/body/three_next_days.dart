@@ -18,9 +18,10 @@ class ThreeNextDays extends StatelessWidget {
       padding: EdgeInsets.all(3),
       child: Column(
         children: [
-          DayWidget(forecast: followingDays[0], isTomorrow: true),
+          DayWidget(forecast: followingDays[0], isToday: true),
           DayWidget(
             forecast: followingDays[1],
+            isTomorrow: true,
           ),
           DayWidget(
             forecast: followingDays[2],
