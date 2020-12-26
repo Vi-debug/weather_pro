@@ -9,14 +9,12 @@ class Weather {
   final Air air;
   final String description;
   final List<DayForecast> followingDays;
-  final List<DateTime> listDate;
   final List<NearTimeData> listNearTimesData;
   final String sunRiseTime;
   final String sunSetTime;
 
   Weather({this.sunRiseTime, this.sunSetTime, 
       this.listNearTimesData,
-      this.listDate,
       this.followingDays,
       this.description,
       this.locaiton,

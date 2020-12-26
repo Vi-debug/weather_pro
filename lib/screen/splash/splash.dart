@@ -76,7 +76,7 @@ class SplashScreen extends StatelessWidget {
     var urlAir =
         "http://api.openweathermap.org/data/2.5/air_pollution?lat=$latitude&lon=$longitude&appid=$apiKey";
     var urlNextDays =
-        "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$apiKey";
+        "https://api.openweathermap.org/data/2.5/onecall?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$apiKey";
     // try {
     print(latitude);
     print(longitude);
@@ -98,15 +98,7 @@ class SplashScreen extends StatelessWidget {
       overall: dataAir['list'][0]['main']['aqi'],
     );
 
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day - 1);
-    final tomorrow = DateTime(now.year, now.month, now.day + 1);
-    final theNext2Day = DateTime(now.year, now.month, now.day + 2);
-    final theNext3Day = DateTime(now.year, now.month, now.day + 3);
-    final listDateTime = [today, tomorrow, theNext2Day, theNext3Day];
-
-    List<DayForecast> followingsDays =
-        getTempFollowingDays(dataNextDay, listDateTime);
+    List<DayForecast> followingsDays = _getTempFollowingDays(dataNextDay);
     List<NearTimeData> listNearTimeData = _getNearTimeData(dataNextDay);
 
     // get sun raise time and set time
@@ -123,7 +115,6 @@ class SplashScreen extends StatelessWidget {
       description: dataTemp['weather'][0]['description'],
       air: air,
       followingDays: followingsDays,
-      listDate: listDateTime,
       listNearTimesData: listNearTimeData,
       sunRiseTime: '${dateRise.hour}:${dateRise.minute}',
       sunSetTime: '${dateSet.hour}:${dateSet.minute}',
@@ -151,137 +142,32 @@ class SplashScreen extends StatelessWidget {
     // }
   }
 
-  List<DayForecast> getTempFollowingDays(
-      Map<String, dynamic> dataNextDay, List<DateTime> listDateTime) {
+  List<DayForecast> _getTempFollowingDays(Map<String, dynamic> dataNextDay) {
     var listDays = List<DayForecast>();
-    List<dynamic> listData = dataNextDay['list'];
-    var i = 1;
-    int times = 0;
-    while (i < listData.length) {
-      dynamic data = listData[i];
-      String hour = data['dt_txt'].split(' ')[1];
-      if (hour == '00:00:00') {
-        int idWeather1, idWeather2;
-        String description;
-        int totalTemp = data['main']['temp'].round();
-        int minTemp = data['main']['temp_min'].round();
-        do {
-          data = listData[++i];
-          hour = data['dt_txt'].split(' ')[1];
-          totalTemp += data['main']['temp'].round();
-          if (data['main']['temp_min'].round() < minTemp) {
-            minTemp = data['main']['temp_min'].round();
-          }
-          if (hour == '09:00:00') {
-            description = data['weather'][0]['description'];
-            idWeather1 = data['weather'][0]['id'];
-          }
-          if (hour == '03:00:00') {
-            idWeather2 = data['weather'][0]['id'];
-          }
-        } while (hour != '21:00:00');
-        int avgTemp = (totalTemp / 8).round();
-        var newDay = DayForecast(
-            avgTemperature: avgTemp,
-            minTemperature: minTemp,
-            description: description,
-            img: _getIconWeather(idWeather1, idWeather2),
-            weekday: listDateTime[times + 1].weekday);
-        listDays.add(newDay);
-        if (++times == 3) break;
-      }
-      i++;
+    final numberReportDay = 7;
+    for (var i = 0; i < numberReportDay; i++) {
+      final day = DayForecast(
+        avgTemperature: dataNextDay['daily'][i]['temp']['day'].round(),
+        description: dataNextDay['daily'][i]['weather'][0]['description'],
+        img: _getWeatherImageByID(dataNextDay['daily'][i]['weather'][0]['id']),
+        minTemperature: dataNextDay['daily'][i]['temp']['night'].round(),
+        weekday: _getWeekDayByTimeStamp(dataNextDay['daily'][i]['dt']),
+      );
+      listDays.add(day);
     }
     return listDays;
   }
 
-  _getIconWeather(int idWeather1, int idWeather2) {
-    if ((200 <= idWeather1 && idWeather1 <= 232) ||
-        (200 <= idWeather2 && idWeather2 <= 232)) {
-      return Image.asset('assets/weather_icon/cloud_thunder.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 500 ||
-        idWeather1 == 501 ||
-        idWeather2 == 500 ||
-        idWeather2 == 501) {
-      return Image.asset('assets/weather_icon/small_rain_day.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 502 ||
-        idWeather1 == 503 ||
-        idWeather1 == 504 ||
-        idWeather2 == 504 ||
-        idWeather2 == 502 ||
-        idWeather2 == 503) {
-      return Image.asset('assets/weather_icon/sun_cloud_heavy_rain.png',
-          width: 34, height: 34);
-    }
-
-    if (idWeather1 == 520 ||
-        idWeather1 == 521 ||
-        idWeather1 == 522 ||
-        idWeather1 == 531 ||
-        idWeather2 == 520 ||
-        idWeather2 == 521 ||
-        idWeather2 == 522 ||
-        idWeather2 == 531) {
-      return Image.asset('assets/weather_icon/cloud_heavy_rain.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 800)
-      return Image.asset('assets/weather_icon/sunny.png',
-          width: 34, height: 34);
-    if (idWeather1 == 801 ||
-        idWeather1 == 802 ||
-        idWeather2 == 801 ||
-        idWeather2 == 802) {
-      return Image.asset('assets/weather_icon/sun_cloud.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 803 ||
-        idWeather1 == 804 ||
-        idWeather2 == 803 ||
-        idWeather2 == 804) {
-      return Image.asset('assets/weather_icon/cloud.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 741)
-      return Image.asset('assets/weather_icon/fog.png', width: 34, height: 34);
-    if ((600 <= idWeather1 && idWeather1 <= 622) ||
-        (600 <= idWeather2 && idWeather2 <= 622)) {
-      return Image.asset('assets/weather_icon/cloud_snow.png',
-          width: 34, height: 34);
-    }
-    if ((300 <= idWeather1 && idWeather1 <= 321) ||
-        (300 <= idWeather2 && idWeather2 <= 321)) {
-      return Image.asset('assets/weather_icon/cloud_small_rain.png',
-          width: 34, height: 34);
-    }
-    if ((701 <= idWeather1 && idWeather1 <= 781) ||
-        (701 <= idWeather2 && idWeather2 <= 781)) {
-      return Image.asset('assets/weather_icon/dust.png', width: 34, height: 34);
-    }
-    return Image.asset('assets/weather_icon/sun_cloud.png',
-        width: 34, height: 34);
-  }
-
   List<NearTimeData> _getNearTimeData(Map<String, dynamic> dataNextDay) {
     List<NearTimeData> listNearTimeData = List<NearTimeData>();
-    var listData = dataNextDay['list'];
-    for (var i = 0; i < 8; i++) {
-      var dataNearTime = listData[i];
-      String time = dataNearTime['dt_txt'].split(' ')[1].substring(0, 5);
-      int temp = dataNearTime['main']['temp'].round();
-      double windSpeed = dataNearTime['wind']['speed'];
-      Image img = _getWeatherImageByID(dataNearTime['weather'][0]['id']);
-      var nearTimeData = NearTimeData(
-        time: time,
-        temp: temp,
-        windSpeed: windSpeed,
-        img: img,
-      );
-      listNearTimeData.add(nearTimeData);
+    final numberOfReportHour = 24;
+    for (var i = 0; i < numberOfReportHour; i++) {
+      listNearTimeData.add(NearTimeData(
+        img: _getWeatherImageByID(dataNextDay['hourly'][i]['weather'][0]['id']),
+        temp: dataNextDay['hourly'][i]['temp'].round(),
+        time: _getHourByTimeStamp(dataNextDay['hourly'][i]['dt']),
+        windSpeed: dataNextDay['hourly'][i]['wind_speed'],
+      ));
     }
     return listNearTimeData;
   }
@@ -333,5 +219,19 @@ class SplashScreen extends StatelessWidget {
     }
     return Image.asset('assets/weather_icon/sun_cloud.png',
         width: 34, height: 34);
+  }
+
+  int _getWeekDayByTimeStamp(int timeStamp) {
+    final date =
+        DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000).toLocal();
+    return date.weekday;
+  }
+
+  String _getHourByTimeStamp(int timeStamp) {
+    return DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000)
+            .toLocal()
+            .hour
+            .toString() +
+        ":00";
   }
 }

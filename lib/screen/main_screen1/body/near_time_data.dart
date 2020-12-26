@@ -20,7 +20,7 @@ class NearTimeSection extends StatelessWidget {
               children: [
                 Text(
                   listNearTime[index].time,
-                  style: TextStyle(color: Color.fromRGBO(227, 227, 227, 0.9)),
+                  style: TextStyle(color: Color.fromRGBO(240, 240, 240, 0.9)),
                 ),
                 Text(listNearTime[index].temp.toString() + '\u00B0',
                     style: TextStyle(color: Colors.white)),
