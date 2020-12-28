@@ -30,13 +30,13 @@ class RiseSetTime extends StatelessWidget {
       children: [
         Text(
           isDawn ? "Bình minh" : "Hoàng hôn",
-          style: TextStyle(color: Colors.white70, fontSize: 20),
+          style: TextStyle(color: Color.fromRGBO(255,255,255,0.85), fontSize: 18),
         ),
         Text(
           time,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 32
+            fontSize: 24
           ),
         ),
       ],

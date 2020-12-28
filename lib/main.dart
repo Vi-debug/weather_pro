@@ -1,11 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart';
-import 'package:weather_pro/screen/main_screen1/main_screen.dart';
-import 'package:weather_pro/screen/splash/splash.dart';
 
 import 'route_generator.dart';
 

@@ -7,6 +7,7 @@ import 'package:weather_pro/icons/weather_icon_icons.dart';
 import 'package:weather_pro/model/air.dart';
 import 'package:weather_pro/model/day_forecast.dart';
 import 'package:weather_pro/model/near_time_data.dart';
+import 'package:weather_pro/model/other_info.dart';
 import 'package:weather_pro/model/weather.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -59,8 +60,7 @@ class SplashScreen extends StatelessWidget {
   }
 
   void getWeather(BuildContext context) async {
-    // //todo: get user location
-    final apiKey = 'dfead8a8da2f58d80d6871874dcc7b94';
+    const APIKEY = 'dfead8a8da2f58d80d6871874dcc7b94';
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -71,15 +71,13 @@ class SplashScreen extends StatelessWidget {
     double latitude = currentPosition.latitude;
     double longitude = currentPosition.longitude;
     var urlTemp =
-        "http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$apiKey";
+        "http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$APIKEY";
 
     var urlAir =
-        "http://api.openweathermap.org/data/2.5/air_pollution?lat=$latitude&lon=$longitude&appid=$apiKey";
+        "http://api.openweathermap.org/data/2.5/air_pollution?lat=$latitude&lon=$longitude&appid=$APIKEY";
     var urlNextDays =
-        "https://api.openweathermap.org/data/2.5/onecall?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$apiKey";
+        "https://api.openweathermap.org/data/2.5/onecall?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$APIKEY";
     // try {
-    print(latitude);
-    print(longitude);
     var responseTemp = await get(urlTemp);
     var responseAir = await get(urlAir);
     var responseNextDay = await get(urlNextDays);
@@ -87,19 +85,12 @@ class SplashScreen extends StatelessWidget {
     Map<String, dynamic> dataTemp = json.decode(responseTemp.body);
     Map<String, dynamic> dataAir = json.decode(responseAir.body);
     Map<String, dynamic> dataNextDay = json.decode(responseNextDay.body);
-    var air = Air(
-      nH3: dataAir['list'][0]['components']['nh3'],
-      cO: dataAir['list'][0]['components']['co'],
-      nO2: dataAir['list'][0]['components']['no2'],
-      o3: dataAir['list'][0]['components']['o3'],
-      sO2: dataAir['list'][0]['components']['so2'],
-      pm2_5: dataAir['list'][0]['components']['pm2_5'],
-      pm10: dataAir['list'][0]['components']['pm10'],
-      overall: dataAir['list'][0]['main']['aqi'],
-    );
+
+    var air = _getAir(dataAir);
+    var otherInfo = _getOtherInfo(dataNextDay);
 
     List<DayForecast> followingsDays = _getTempFollowingDays(dataNextDay);
-    List<NearTimeData> listNearTimeData = _getNearTimeData(dataNextDay);
+    List<NearTimeData> listNearTimeData = _getTempFlowingHour(dataNextDay);
 
     // get sun raise time and set time
     var dateRise =
@@ -108,7 +99,6 @@ class SplashScreen extends StatelessWidget {
     var dateSet =
         DateTime.fromMillisecondsSinceEpoch(dataTemp['sys']['sunset'] * 1000)
             .toLocal();
-
     var weather = Weather(
       locaiton: dataTemp['name'],
       temperature: dataTemp['main']['temp'].round(),
@@ -118,9 +108,10 @@ class SplashScreen extends StatelessWidget {
       listNearTimesData: listNearTimeData,
       sunRiseTime: '${dateRise.hour}:${dateRise.minute}',
       sunSetTime: '${dateSet.hour}:${dateSet.minute}',
+      otherInfo: otherInfo,
     );
 
-    Navigator.pushNamed(context, '/main_screen', arguments: weather);
+    Navigator.pushReplacementNamed(context, '/main_screen', arguments: weather);
     // } catch (e) {
     //   showDialog(
     //     context: context,
@@ -158,7 +149,7 @@ class SplashScreen extends StatelessWidget {
     return listDays;
   }
 
-  List<NearTimeData> _getNearTimeData(Map<String, dynamic> dataNextDay) {
+  List<NearTimeData> _getTempFlowingHour(Map<String, dynamic> dataNextDay) {
     List<NearTimeData> listNearTimeData = List<NearTimeData>();
     final numberOfReportHour = 24;
     for (var i = 0; i < numberOfReportHour; i++) {
@@ -233,5 +224,29 @@ class SplashScreen extends StatelessWidget {
             .hour
             .toString() +
         ":00";
+  }
+
+  Air _getAir(Map<String, dynamic> dataAir) {
+    return Air(
+      nH3: dataAir['list'][0]['components']['nh3'],
+      cO: dataAir['list'][0]['components']['co'],
+      nO2: dataAir['list'][0]['components']['no2'],
+      o3: dataAir['list'][0]['components']['o3'],
+      sO2: dataAir['list'][0]['components']['so2'],
+      pm2_5: dataAir['list'][0]['components']['pm2_5'],
+      pm10: dataAir['list'][0]['components']['pm10'],
+      overall: dataAir['list'][0]['main']['aqi'],
+    );
+  }
+
+  OtherInfo _getOtherInfo(Map<String, dynamic > dataNextDay) {
+    return OtherInfo(
+      fellLikeTemp: dataNextDay['current']['feels_like'].round(),
+      humidity: dataNextDay['current']['humidity'],
+      windDirection: dataNextDay['current']['wind_deg'],
+      uV: dataNextDay['current']['uvi'],
+      visibility: dataNextDay['current']['visibility'],
+      windSpeed: dataNextDay['current']['wind_speed'],
+    );
   }
 }

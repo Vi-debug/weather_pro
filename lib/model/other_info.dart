@@ -1,10 +1,15 @@
 class OtherInfo {
-  final String fellLikeTemp;
-  final String humidity;
-  final String pressure;
-  final String windSpeed;
-  final String winDirection;
+  final int fellLikeTemp;
+  final int humidity;
+  final int windDirection;
+  final double windSpeed;
+  final int visibility;
+  final int uV;
 
-  OtherInfo(this.fellLikeTemp, this.humidity, this.pressure, this.windSpeed,
-      this.winDirection);
+  OtherInfo({this.uV, 
+      this.fellLikeTemp,
+      this.humidity,
+      this.windDirection,
+      this.windSpeed,
+      this.visibility});
 }

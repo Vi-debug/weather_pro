@@ -24,10 +24,70 @@ class OtherInfoSection extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child: Container(),
+            child: GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(10),
+              mainAxisSpacing: 10,
+              childAspectRatio: 3,
+              crossAxisCount: 2,
+              children: [
+                AdditionalInfo(
+                  info: "Cảm giác như",
+                  value: weather.otherInfo.fellLikeTemp.toString() + '\u00B0',
+                ),
+                AdditionalInfo(
+                  info: "Độ ẩm",
+                  value: weather.otherInfo.humidity.toString() + '%',
+                ),
+                AdditionalInfo(
+                  info: "Chỉ số UV",
+                  value: weather.otherInfo.uV,
+                ),
+                AdditionalInfo(
+                  info: "Tầm nhìn",
+                  value: (weather.otherInfo.visibility / 1000).toStringAsFixed(1) + ' km',
+                ),
+                AdditionalInfo(
+                  info: "Tốc độ gió",
+                  value: (weather.otherInfo.windSpeed * 3600 / 1000).toStringAsFixed(1) + ' km/h',
+                ),
+                AdditionalInfo(
+                  info: "Hướng gió",
+                  value: weather.otherInfo.windDirection,
+                )
+              ],
+            ),
           )
         ],
       ),
+    );
+  }
+}
+
+class AdditionalInfo extends StatelessWidget {
+  final String info;
+  final dynamic value;
+
+  const AdditionalInfo({Key key, this.info, this.value}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          info,
+          style: TextStyle(color: Color.fromRGBO(255,255,255,0.85), fontSize: 15),
+        ),
+        Text(
+          value.toString(),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+      ],
     );
   }
 }
