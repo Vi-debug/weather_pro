@@ -60,7 +60,7 @@ class SplashScreen extends StatelessWidget {
   }
 
   void getWeather(BuildContext context) async {
-    const APIKEY = 'dfead8a8da2f58d80d6871874dcc7b94';
+    const APIKEY = 'dfead8a8da2f58d80d6871874dcc7b94'; 
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -81,7 +81,7 @@ class SplashScreen extends StatelessWidget {
     var responseTemp = await get(urlTemp);
     var responseAir = await get(urlAir);
     var responseNextDay = await get(urlNextDays);
-
+    print(urlNextDays);
     Map<String, dynamic> dataTemp = json.decode(responseTemp.body);
     Map<String, dynamic> dataAir = json.decode(responseAir.body);
     Map<String, dynamic> dataNextDay = json.decode(responseNextDay.body);
@@ -140,7 +140,8 @@ class SplashScreen extends StatelessWidget {
       final day = DayForecast(
         avgTemperature: dataNextDay['daily'][i]['temp']['day'].round(),
         description: dataNextDay['daily'][i]['weather'][0]['description'],
-        img: _getWeatherImageByID(dataNextDay['daily'][i]['weather'][0]['id']),
+        img:
+            _getWeatherImageByID(dataNextDay['daily'][i]['weather'][0]['icon']),
         minTemperature: dataNextDay['daily'][i]['temp']['night'].round(),
         weekday: _getWeekDayByTimeStamp(dataNextDay['daily'][i]['dt']),
       );
@@ -154,7 +155,8 @@ class SplashScreen extends StatelessWidget {
     final numberOfReportHour = 24;
     for (var i = 0; i < numberOfReportHour; i++) {
       listNearTimeData.add(NearTimeData(
-        img: _getWeatherImageByID(dataNextDay['hourly'][i]['weather'][0]['id']),
+        img: _getWeatherImageByID(
+            dataNextDay['hourly'][i]['weather'][0]['icon']),
         temp: dataNextDay['hourly'][i]['temp'].round(),
         time: _getHourByTimeStamp(dataNextDay['hourly'][i]['dt']),
         windSpeed: dataNextDay['hourly'][i]['wind_speed'],
@@ -163,53 +165,8 @@ class SplashScreen extends StatelessWidget {
     return listNearTimeData;
   }
 
-  Image _getWeatherImageByID(int idWeather1) {
-    if ((200 <= idWeather1 && idWeather1 <= 232)) {
-      return Image.asset('assets/weather_icon/cloud_thunder.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 500 || idWeather1 == 501) {
-      return Image.asset('assets/weather_icon/small_rain_day.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 502 || idWeather1 == 503 || idWeather1 == 504) {
-      return Image.asset('assets/weather_icon/sun_cloud_heavy_rain.png',
-          width: 34, height: 34);
-    }
-
-    if (idWeather1 == 520 ||
-        idWeather1 == 521 ||
-        idWeather1 == 522 ||
-        idWeather1 == 531) {
-      return Image.asset('assets/weather_icon/cloud_heavy_rain.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 800)
-      return Image.asset('assets/weather_icon/sunny.png',
-          width: 34, height: 34);
-    if (idWeather1 == 801 || idWeather1 == 802) {
-      return Image.asset('assets/weather_icon/sun_cloud.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 803 || idWeather1 == 804) {
-      return Image.asset('assets/weather_icon/cloud.png',
-          width: 34, height: 34);
-    }
-    if (idWeather1 == 741)
-      return Image.asset('assets/weather_icon/fog.png', width: 34, height: 34);
-    if ((600 <= idWeather1 && idWeather1 <= 622)) {
-      return Image.asset('assets/weather_icon/cloud_snow.png',
-          width: 34, height: 34);
-    }
-    if ((300 <= idWeather1 && idWeather1 <= 321)) {
-      return Image.asset('assets/weather_icon/cloud_small_rain.png',
-          width: 34, height: 34);
-    }
-    if ((701 <= idWeather1 && idWeather1 <= 781)) {
-      return Image.asset('assets/weather_icon/dust.png', width: 34, height: 34);
-    }
-    return Image.asset('assets/weather_icon/sun_cloud.png',
-        width: 34, height: 34);
+  Image _getWeatherImageByID(String iconName) {
+    return Image.asset('assets/weather_icon/$iconName.png', width: 32, height: 32,);
   }
 
   int _getWeekDayByTimeStamp(int timeStamp) {
@@ -239,7 +196,7 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  OtherInfo _getOtherInfo(Map<String, dynamic > dataNextDay) {
+  OtherInfo _getOtherInfo(Map<String, dynamic> dataNextDay) {
     return OtherInfo(
       fellLikeTemp: dataNextDay['current']['feels_like'].round(),
       humidity: dataNextDay['current']['humidity'],
