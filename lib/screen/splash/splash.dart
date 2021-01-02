@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
-import 'package:weather_pro/icons/weather_icon_icons.dart';
 import 'package:weather_pro/model/air.dart';
 import 'package:weather_pro/model/day_forecast.dart';
 import 'package:weather_pro/model/near_time_data.dart';

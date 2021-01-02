@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_pro/model/air.dart';
 import 'package:weather_pro/model/weather.dart';
+import 'package:weather_pro/screen/air_screen_2/air_screen_2.dart';
 
 import 'screen/main_screen1/main_screen.dart';
 import 'screen/splash/splash.dart';
@@ -18,6 +20,13 @@ class RouteGenerator {
             builder: (context) => MainScreen(
               weather: arg,
             ),
+          );
+        }
+        return _errorRoute();
+      case '/air_screen':
+        if (arg is Air) {
+          return MaterialPageRoute(
+            builder: (context) => AirScreen(air: arg,),
           );
         }
         return _errorRoute();

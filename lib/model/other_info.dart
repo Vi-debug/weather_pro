@@ -1,10 +1,10 @@
 class OtherInfo {
-  final int fellLikeTemp;
-  final int humidity;
-  final int windDirection;
-  final double windSpeed;
-  final int visibility;
-  final int uV;
+  final dynamic fellLikeTemp;
+  final dynamic humidity;
+  final dynamic windDirection;
+  final dynamic windSpeed;
+  final dynamic visibility;
+  final dynamic uV;
 
   OtherInfo({this.uV, 
       this.fellLikeTemp,

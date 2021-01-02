@@ -20,7 +20,7 @@ class BodyMainSection extends StatelessWidget {
             TemperatureSection(
               currentTemperature: weather.temperature.toString(),
               description: weather.description,
-              aQI: _getAirQuality(),
+              air: weather.air,
             ),
             NearTimeSection(weather.listNearTimesData),
             ThreeNextDays(followingDays: weather.followingDays),
@@ -31,19 +31,5 @@ class BodyMainSection extends StatelessWidget {
     );
   }
 
-  _getAirQuality() {
-    switch (weather.air.overall) {
-      case 1:
-        return 'Rất Tốt';
-      case 2:
-        return 'Tốt';
-      case 3:
-        return 'Trung Bình';
-      case 4:
-        return 'Xấu';
-      case 5:
-        return 'Rất xấu';
-      default:
-    }
-  }
+  
 }

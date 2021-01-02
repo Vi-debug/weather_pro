@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:weather_pro/icons/custom_icon_icons.dart';
+import 'package:weather_pro/model/air.dart';
 
 class TemperatureSection extends StatelessWidget {
   final String currentTemperature;
   final String description;
-  final String aQI;
+  final Air air;
 
   const TemperatureSection(
-      {Key key, @required this.currentTemperature, this.description, this.aQI})
+      {Key key, @required this.currentTemperature, this.description, this.air})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 70),
+      margin: EdgeInsets.only(top: 50),
       alignment: Alignment.center,
       child: Column(
         children: [
@@ -24,7 +25,7 @@ class TemperatureSection extends StatelessWidget {
               Text(
                 currentTemperature,
                 style: Theme.of(context).textTheme.headline1,
-              ), //todo get data from accumweather
+              ),
               Text('\u2103', style: Theme.of(context).textTheme.headline2),
             ],
           ),
@@ -36,38 +37,45 @@ class TemperatureSection extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          GestureDetector(
-            child: SizedBox(
-              width: 200,
-              child: Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white60),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      CustomIcon.leaf,
-                      size: 18,
-                      color: Colors.green.shade700,
-                    ),
-                    Text(
-                      ' AQI $aQI',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Open-Sans',
-                        fontSize: 18,
+          Row(
+            children: [
+              Expanded(child: Container()),
+              GestureDetector(
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white60),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Hero(
+                        tag: 'air quality',
+                        child: Icon(
+                          CustomIcon.leaf,
+                          size: 18,
+                          color: Colors.green.shade700,
+                        ),
                       ),
-                    )
-                  ],
+                      Text(
+                        ' AQI ${air.getAirQualityText()}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Open-Sans',
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed('/air_screen', arguments: air);
+                },
               ),
-            ),
-            onTap: () {
-              // todo go to detail air quality screen
-            },
+              Expanded(child: Container()),
+            ],
           )
         ],
       ),
