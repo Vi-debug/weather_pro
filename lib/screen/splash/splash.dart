@@ -59,7 +59,7 @@ class SplashScreen extends StatelessWidget {
   }
 
   void getWeather(BuildContext context) async {
-    const APIKEY = 'dfead8a8da2f58d80d6871874dcc7b94'; 
+    const APIKEY = 'dfead8a8da2f58d80d6871874dcc7b94';
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -80,7 +80,7 @@ class SplashScreen extends StatelessWidget {
     var responseTemp = await get(urlTemp);
     var responseAir = await get(urlAir);
     var responseNextDay = await get(urlNextDays);
-    print(urlNextDays);
+
     Map<String, dynamic> dataTemp = json.decode(responseTemp.body);
     Map<String, dynamic> dataAir = json.decode(responseAir.body);
     Map<String, dynamic> dataNextDay = json.decode(responseNextDay.body);
@@ -136,13 +136,18 @@ class SplashScreen extends StatelessWidget {
     var listDays = List<DayForecast>();
     final numberReportDay = 7;
     for (var i = 0; i < numberReportDay; i++) {
+      final timeStamp = dataNextDay['daily'][i]['dt'];
+      final date =
+          DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000).toLocal();
+      print('${date.day}/${date.month}');
       final day = DayForecast(
         avgTemperature: dataNextDay['daily'][i]['temp']['day'].round(),
         description: dataNextDay['daily'][i]['weather'][0]['description'],
         img:
             _getWeatherImageByID(dataNextDay['daily'][i]['weather'][0]['icon']),
         minTemperature: dataNextDay['daily'][i]['temp']['night'].round(),
-        weekday: _getWeekDayByTimeStamp(dataNextDay['daily'][i]['dt']),
+        weekday: date.weekday,
+        dayAndMonth: '${date.day} / ${date.month}',
       );
       listDays.add(day);
     }
@@ -165,13 +170,11 @@ class SplashScreen extends StatelessWidget {
   }
 
   Image _getWeatherImageByID(String iconName) {
-    return Image.asset('assets/weather_icon/$iconName.png', width: 32, height: 32,);
-  }
-
-  int _getWeekDayByTimeStamp(int timeStamp) {
-    final date =
-        DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000).toLocal();
-    return date.weekday;
+    return Image.asset(
+      'assets/weather_icon/$iconName.png',
+      width: 32,
+      height: 32,
+    );
   }
 
   String _getHourByTimeStamp(int timeStamp) {
@@ -205,4 +208,6 @@ class SplashScreen extends StatelessWidget {
       windSpeed: dataNextDay['current']['wind_speed'],
     );
   }
+
+  _getDayAndMonth(int timeStamp) {}
 }

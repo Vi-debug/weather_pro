@@ -6,9 +6,11 @@ class DayForecast {
   final int avgTemperature;
   final int minTemperature;
   final Image img;
+  final String dayAndMonth;
 
   DayForecast(
       {this.weekday,
+      this.dayAndMonth,
       this.description,
       this.avgTemperature,
       this.minTemperature,

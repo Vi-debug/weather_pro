@@ -15,7 +15,7 @@ class ThreeNextDays extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       margin: EdgeInsets.symmetric(horizontal: 15),
-      padding: EdgeInsets.all(3),
+      padding: EdgeInsets.all(10),
       child: Column(
         children: [
           DayWidget(forecast: followingDays[0], isToday: true),
@@ -25,6 +25,22 @@ class ThreeNextDays extends StatelessWidget {
           ),
           DayWidget(
             forecast: followingDays[2],
+          ),
+          Container(
+            padding: EdgeInsets.all(7),
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              child: Text(
+                'Xem thời tiết 7 ngày tới',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Color.fromRGBO(255, 255, 255, 0.9),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed('/seven_days_screen', arguments: followingDays);
+              },
+            ),
           ),
         ],
       ),

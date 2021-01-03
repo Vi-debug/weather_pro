@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:weather_pro/model/air.dart';
+import 'package:weather_pro/model/day_forecast.dart';
 import 'package:weather_pro/model/weather.dart';
 import 'package:weather_pro/screen/air_screen_2/air_screen_2.dart';
+import 'package:weather_pro/screen/seven_next_days_scrren_3/seven_days.dart';
 
 import 'screen/main_screen1/main_screen.dart';
 import 'screen/splash/splash.dart';
@@ -22,29 +24,47 @@ class RouteGenerator {
             ),
           );
         }
-        return _errorRoute();
+        return MaterialPageRoute(
+          builder: (context) => _ErrorRoute(),
+        );
       case '/air_screen':
         if (arg is Air) {
           return MaterialPageRoute(
-            builder: (context) => AirScreen(air: arg,),
+            builder: (context) => AirScreen(
+              air: arg,
+            ),
           );
         }
-        return _errorRoute();
+        return MaterialPageRoute(
+          builder: (context) => _ErrorRoute(),
+        );
+      case '/seven_days_screen':
+        if (arg is List<DayForecast>) {
+          return MaterialPageRoute(
+            builder: (context) => SevenNextDays(listFollowingDays: arg),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (context) => _ErrorRoute(),
+        );
       default:
-        return _errorRoute();
+        return MaterialPageRoute(
+          builder: (context) => _ErrorRoute(),
+        );
     }
   }
+}
 
-  static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(
-      builder: (context) => Container(
-        alignment: Alignment.center,
-        color: Colors.red,
-        child: Text(
-          'Some error happened',
-          style: TextStyle(
-            color: Colors.white,
-          ),
+class _ErrorRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      color: Colors.red,
+      child: Text(
+        'Some error happened',
+        style: TextStyle(
+          color: Colors.white,
         ),
       ),
     );

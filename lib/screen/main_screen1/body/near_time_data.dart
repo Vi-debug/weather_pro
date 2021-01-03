@@ -15,6 +15,7 @@ class NearTimeSection extends StatelessWidget {
         itemBuilder: (context, index) {
           return Container(
             padding: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(horizontal: 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
