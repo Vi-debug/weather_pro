@@ -70,3 +70,6 @@ class _ErrorRoute extends StatelessWidget {
     );
   }
 }
+class Random {
+  
+}
