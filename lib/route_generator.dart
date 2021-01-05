@@ -62,7 +62,7 @@ class _ErrorRoute extends StatelessWidget {
       alignment: Alignment.center,
       color: Colors.red,
       child: Text(
-        'Some error happened',
+        'a Lot error happened',
         style: TextStyle(
           color: Colors.white,
         ),
