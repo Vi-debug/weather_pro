@@ -14,7 +14,7 @@ class TemperatureSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 50),
+      margin:const EdgeInsets.only(top: 50),
       alignment: Alignment.center,
       child: Column(
         children: [
@@ -31,7 +31,7 @@ class TemperatureSection extends StatelessWidget {
           ),
           Text(
             description,
-            style: TextStyle(
+            style:const  TextStyle(
               fontFamily: 'OpenSans',
               fontSize: 22,
               color: Colors.white,
@@ -39,11 +39,11 @@ class TemperatureSection extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(child: Container()),
+              const Spacer(),
               GestureDetector(
                 child: Container(
-                  margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin:const EdgeInsets.all(10),
+                  padding:const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white60),
@@ -60,7 +60,7 @@ class TemperatureSection extends StatelessWidget {
                       ),
                       Text(
                         ' AQI ${air.getAirQualityText()}',
-                        style: TextStyle(
+                        style:const TextStyle(
                           color: Colors.black,
                           fontFamily: 'Open-Sans',
                           fontSize: 18,

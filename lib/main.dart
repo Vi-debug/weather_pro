@@ -20,19 +20,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Opens-Sans',
         textTheme: TextTheme(
-          headline4: TextStyle(
+          headline4: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w900,
             color: Colors.white,
           ),
-          headline3: TextStyle(
+          headline3: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w900,
             color: Colors.white,
           ),
-          headline2: TextStyle(
+          headline2:const  TextStyle(
             shadows: [
-              Shadow(
+              const Shadow(
                 blurRadius: 1.0,
                 offset: Offset(1.0, 1.0),
               )
@@ -41,17 +41,17 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
-          headline1: TextStyle(
+          headline1:const TextStyle(
             fontFamily: 'Comfortaa',
             shadows: [
-              Shadow(
+              const Shadow(
                 blurRadius: 1.0,
                 offset: Offset(1.0, 1.0),
               )
             ],
             fontSize: 150,
             fontWeight: FontWeight.w500,
-            color: Color.fromRGBO(255, 255, 255, 0.85)
+            color:const Color.fromRGBO(255, 255, 255, 0.85)
           ),
         ),
       ),

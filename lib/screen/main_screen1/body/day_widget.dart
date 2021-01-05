@@ -13,7 +13,7 @@ class DayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(5),
+      padding:const EdgeInsets.all(5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -27,12 +27,8 @@ class DayWidget extends StatelessWidget {
                     : '  Hôm nay')
                 : '  Ngày mai',
           ),
-          Expanded(child: Container()),
-          CustomText(text: '${forecast.avgTemperature} \u00B0'),
-          CustomText(
-            text: ' / ',
-          ),
-          CustomText(text: '${forecast.minTemperature} \u00B0'),
+          const Spacer(),
+          CustomText(text: '${forecast.avgTemperature} \u00B0 / ${forecast.minTemperature} \u00B0'),
         ],
       ),
     );
@@ -47,7 +43,7 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Open-Sans',
         color: Colors.white,
         fontSize: 16,

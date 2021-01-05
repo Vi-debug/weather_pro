@@ -13,7 +13,7 @@ class AirScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -24,7 +24,7 @@ class AirScreen extends StatelessWidget {
       ),
       body: Container(
         height: size.height,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding:const  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -40,7 +40,7 @@ class AirScreen extends StatelessWidget {
                       color: Colors.green.shade700,
                     ),
                   ),
-                  Text(
+                  const Text(
                     ' Chất lượng không khí:',
                     style: TextStyle(fontSize: 24),
                   )
@@ -48,11 +48,11 @@ class AirScreen extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
+              margin:const EdgeInsets.symmetric(vertical: 20),
               child: air.getAirQualityWidget(36),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 15),
+              margin:const  EdgeInsets.only(bottom: 15),
               child: Text(
                 air.getRecommended(),
                 style: TextStyle(fontSize: 18),
@@ -105,7 +105,7 @@ class AirText extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(bottom: 8),
+      margin:const EdgeInsets.only(bottom: 8),
       width: size.width / 2,
       child: Row(
         children: [
@@ -113,7 +113,7 @@ class AirText extends StatelessWidget {
             components,
             style: TextStyle(fontSize: 16),
           ),
-          Expanded(child: Container()),
+          const Spacer(),
           Text(
             value.toString(),
             style: TextStyle(
