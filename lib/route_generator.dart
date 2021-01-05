@@ -62,7 +62,7 @@ class _ErrorRoute extends StatelessWidget {
       alignment: Alignment.center,
       color: Colors.red,
       child: const Text(
-        'Something has happened 3 times',
+        'Some error happened',
         style: TextStyle(
           color: Colors.white,
         ),
