@@ -25,18 +25,18 @@ class SplashScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Weather',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.w500,
                     fontSize: 40,
                     color: Colors.white,
                   ),
                 ),
-                Text(
+                const Text(
                   ' PRO',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.w500,
                     fontSize: 18,
@@ -46,7 +46,7 @@ class SplashScreen extends StatelessWidget {
               ],
             ),
             Image.asset('assets/weather.gif'),
-            Text(
+            const Text(
               'a product of Art',
               style: TextStyle(
                 color: Colors.white,
@@ -208,6 +208,4 @@ class SplashScreen extends StatelessWidget {
       windSpeed: dataNextDay['current']['wind_speed'],
     );
   }
-
-  _getDayAndMonth(int timeStamp) {}
 }

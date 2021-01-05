@@ -8,13 +8,13 @@ class CustomAppBar extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.all(5),
+        padding:const  EdgeInsets.all(5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
               color: Colors.white,
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               iconSize: 24,
               onPressed: () {
                 //todo: add new city
@@ -27,17 +27,17 @@ class CustomAppBar extends StatelessWidget {
             PopupMenuButton(
               elevation: 10,
               onSelected: handleSelected,
-              icon: Icon(
+              icon:const Icon(
                 Icons.more_vert_rounded,
                 color: Colors.white,
               ),
               itemBuilder: (context) {
                 return [
                   PopupMenuItem(
-                    child: Text('Cài đặt'),
+                    child:const Text('Cài đặt'),
                     value: 'Cài đặt',
                   ),
-                  PopupMenuItem(child: Text('Chia sẻ'), value: 'Chia sẻ'),
+                  const PopupMenuItem(child:const Text('Chia sẻ'), value: 'Chia sẻ'),
                 ];
               },
             ) 

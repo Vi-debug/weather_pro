@@ -8,14 +8,14 @@ class NearTimeSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width:double.infinity,
       height: 150,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Container(
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.symmetric(horizontal: 5),
+            padding:const EdgeInsets.all(10),
+            margin:const EdgeInsets.symmetric(horizontal: 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -28,7 +28,7 @@ class NearTimeSection extends StatelessWidget {
                 listNearTime[index].img,
                 Text(
                   '${(listNearTime[index].windSpeed * 3600 / 1000).toStringAsFixed(1)} km/h',
-                  style: TextStyle(color: Color.fromRGBO(240, 240, 240, 0.9)),
+                  style:const TextStyle(color: Color.fromRGBO(240, 240, 240, 0.9)),
                 ),
               ],
             ),

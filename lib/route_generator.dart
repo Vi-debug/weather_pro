@@ -61,8 +61,8 @@ class _ErrorRoute extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       color: Colors.red,
-      child: Text(
-        'Some error happened',
+      child: const Text(
+        'Some error has happened',
         style: TextStyle(
           color: Colors.white,
         ),

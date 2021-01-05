@@ -9,7 +9,7 @@ class OtherInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
+      margin:const  EdgeInsets.all(15),
       height: 300,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -25,8 +25,8 @@ class OtherInfoSection extends StatelessWidget {
           Expanded(
             flex: 3,
             child: GridView.count(
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.all(10),
+              physics:const NeverScrollableScrollPhysics(),
+              padding:const EdgeInsets.all(10),
               mainAxisSpacing: 10,
               childAspectRatio: 3,
               crossAxisCount: 2,
@@ -77,11 +77,11 @@ class AdditionalInfo extends StatelessWidget {
       children: [
         Text(
           info,
-          style: TextStyle(color: Color.fromRGBO(255,255,255,0.85), fontSize: 15),
+          style: const TextStyle(color: Color.fromRGBO(255,255,255,0.85), fontSize: 15),
         ),
         Text(
           value.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 20,
