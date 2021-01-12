@@ -1,23 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 import 'package:weather_pro/model/air.dart';
 import 'package:weather_pro/model/day_forecast.dart';
+import 'package:weather_pro/model/near_time_data.dart';
+import 'package:weather_pro/model/other_info.dart';
 import 'package:weather_pro/model/weather.dart';
 import 'package:weather_pro/screen/air_screen_2/air_screen_2.dart';
 import 'package:weather_pro/screen/seven_next_days_scrren_3/seven_days.dart';
 
 import 'screen/main_screen1/main_screen.dart';
-import 'screen/splash/splash.dart';
 
 class RouteGenerator {
   static Route<String> generate(RouteSettings settings) {
     final arg = settings.arguments;
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(
-          builder: (context) => SplashScreen(),
-        );
       case '/main_screen':
-        if (arg is Weather) {
+        if (arg == null) {
           return MaterialPageRoute(
             builder: (context) => MainScreen(
               weather: arg,

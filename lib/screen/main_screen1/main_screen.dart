@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:weather_pro/model/weather.dart';
+import 'package:weather_pro/screen/main_screen1/info_section.dart';
 
 import 'background.dart';
-import 'info_section.dart';
 
 class MainScreen extends StatelessWidget {
   final Weather weather;
@@ -17,7 +18,7 @@ class MainScreen extends StatelessWidget {
       children: [
         Background(),
         Positioned.fill(child: Container(color: Colors.black12)),
-        Positioned.fill(child: MainInfo(weather: weather,)),
+      //  Positioned.fill(child: MainInfo(weather: weather))
       ],
     );
   }
