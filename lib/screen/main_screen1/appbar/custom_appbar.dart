@@ -14,10 +14,10 @@ class CustomAppBar extends StatelessWidget {
           children: [
             IconButton(
               color: Colors.white,
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.refresh),
               iconSize: 24,
               onPressed: () {
-                //todo: add new city
+                //todo: refresh data
               },
             ),
             Text(
