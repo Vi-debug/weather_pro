@@ -10,7 +10,19 @@ import 'package:weather_pro/model/near_time_data.dart';
 import 'package:weather_pro/model/other_info.dart';
 import 'package:weather_pro/model/weather.dart';
 
-class MainScreenViewModel {
+class MainScreenViewModel with ChangeNotifier {
+  Weather _weather;
+
+  Weather get weather => _weather;
+
+  MainScreenViewModel() {
+      updateWeather();
+  }
+  updateWeather() async {
+    _weather = await getWeather();
+    notifyListeners();
+  }
+
   Future<Weather> getWeather() async {
     var prefs = await SharedPreferences.getInstance();
     const APIKEY = 'dfead8a8da2f58d80d6871874dcc7b94';

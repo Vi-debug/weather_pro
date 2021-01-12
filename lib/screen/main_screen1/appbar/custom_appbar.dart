@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_pro/viewmodels/main_screen_view_model.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final String city;
-  CustomAppBar({this.city});
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: Container(
-        padding:const  EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -20,27 +20,30 @@ class CustomAppBar extends StatelessWidget {
                 //todo: refresh data
               },
             ),
-            Text(
-              city == null ? 'Location' : city,
-              style: Theme.of(context).textTheme.headline2,
+            Consumer<MainScreenViewModel>(
+              builder: (context, mainSceenVM, _) => Text(
+                mainSceenVM.weather == null ? 'Waiting' : mainSceenVM.weather.locaiton,
+                style: Theme.of(context).textTheme.headline2,
+              ),
             ),
             PopupMenuButton(
               elevation: 10,
               onSelected: handleSelected,
-              icon:const Icon(
+              icon: const Icon(
                 Icons.more_vert_rounded,
                 color: Colors.white,
               ),
               itemBuilder: (context) {
                 return [
                   PopupMenuItem(
-                    child:const Text('Cài đặt'),
+                    child: const Text('Cài đặt'),
                     value: 'Cài đặt',
                   ),
-                  const PopupMenuItem(child:const Text('Chia sẻ'), value: 'Chia sẻ'),
+                  const PopupMenuItem(
+                      child: const Text('Chia sẻ'), value: 'Chia sẻ'),
                 ];
               },
-            ) 
+            )
           ],
         ),
       ),
