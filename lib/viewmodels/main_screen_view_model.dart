@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_pro/model/air.dart';
+import 'package:weather_pro/model/api_weather.dart';
 import 'package:weather_pro/model/day_forecast.dart';
 import 'package:weather_pro/model/near_time_data.dart';
 import 'package:weather_pro/model/other_info.dart';
@@ -16,7 +16,7 @@ class MainScreenViewModel with ChangeNotifier {
   Weather get weather => _weather;
 
   MainScreenViewModel() {
-      updateWeather();
+    updateWeather();
   }
   updateWeather() async {
     _weather = await getWeather();
@@ -24,56 +24,26 @@ class MainScreenViewModel with ChangeNotifier {
   }
 
   Future<Weather> getWeather() async {
-    var prefs = await SharedPreferences.getInstance();
-    const APIKEY = 'dfead8a8da2f58d80d6871874dcc7b94';
-    double latitude;
-    double longitude;
-    if (prefs.getDouble('latitude') == null ||
-        prefs.getDouble('longitude') == null) {
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        permission = await Geolocator.requestPermission();
-      }
-      var currentPosition = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      latitude = currentPosition.latitude;
-      longitude = currentPosition.longitude;
-      prefs.setDouble('latitude', latitude);
-      prefs.setDouble('longitude', longitude);
-    } else {
-      latitude = prefs.get('latitude');
-      longitude = prefs.get('longitude');
-    }
-    print('done location');
-    var urlTemp =
-        "http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$APIKEY";
-    var urlAir =
-        "http://api.openweathermap.org/data/2.5/air_pollution?lat=$latitude&lon=$longitude&appid=$APIKEY";
-    var urlNextDays =
-        "https://api.openweathermap.org/data/2.5/onecall?lat=$latitude&lon=$longitude&units=metric&lang=vi&appid=$APIKEY";
-    // try {
-    var responseTemp = await get(urlTemp);
-    var responseAir = await get(urlAir);
-    var responseNextDay = await get(urlNextDays);
-    print('done call 3 api');
-    Map<String, dynamic> dataTemp = json.decode(responseTemp.body);
-    Map<String, dynamic> dataAir = json.decode(responseAir.body);
-    Map<String, dynamic> dataNextDay = json.decode(responseNextDay.body);
+    Position pos = await _getUserPosition();
+    var api = ApiWeather(pos.latitude, pos.longitude);
+    var responseTemp = await get(api.getUrlTemp());
+    var responseAir = await get(api.getUrlAir());
+    var responseNextDay = await get(api.getUrlNextDay());
 
-    var air = _getAir(dataAir);
-    var otherInfo = _getOtherInfo(dataNextDay);
+    var dataTemp = json.decode(responseTemp.body);
+    var dataAir = json.decode(responseAir.body);
+    var dataNextDay = json.decode(responseNextDay.body);
+
+    var air = Air.fromJson(dataAir['list'][0]);
+    var otherInfo = OtherInfo.fromJson(dataNextDay['current']);
 
     List<DayForecast> followingsDays = _getTempFollowingDays(dataNextDay);
     List<NearTimeData> listNearTimeData = _getTempFlowingHour(dataNextDay);
 
     // get sun raise time and set time
-    var dateRise =
-        DateTime.fromMillisecondsSinceEpoch(dataTemp['sys']['sunrise'] * 1000)
-            .toLocal();
-    var dateSet =
-        DateTime.fromMillisecondsSinceEpoch(dataTemp['sys']['sunset'] * 1000)
-            .toLocal();
+    var dateRise = _getTimeFromTimeStamp(dataTemp['sys']['sunrise']);
+    var dateSet = _getTimeFromTimeStamp(dataTemp['sys']['sunset']);
+
     var weather = Weather(
       locaiton: dataTemp['name'],
       temperature: dataTemp['main']['temp'].round(),
@@ -85,7 +55,6 @@ class MainScreenViewModel with ChangeNotifier {
       sunSetTime: '${dateSet.hour}:${dateSet.minute}',
       otherInfo: otherInfo,
     );
-    print('done total!');
     return weather;
   }
 
@@ -141,27 +110,18 @@ class MainScreenViewModel with ChangeNotifier {
         ":00";
   }
 
-  Air _getAir(Map<String, dynamic> dataAir) {
-    return Air(
-      nH3: dataAir['list'][0]['components']['nh3'],
-      cO: dataAir['list'][0]['components']['co'],
-      nO2: dataAir['list'][0]['components']['no2'],
-      o3: dataAir['list'][0]['components']['o3'],
-      sO2: dataAir['list'][0]['components']['so2'],
-      pm2_5: dataAir['list'][0]['components']['pm2_5'],
-      pm10: dataAir['list'][0]['components']['pm10'],
-      overall: dataAir['list'][0]['main']['aqi'],
-    );
+  DateTime _getTimeFromTimeStamp(timeStamp) {
+    return DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000).toLocal();
   }
 
-  OtherInfo _getOtherInfo(Map<String, dynamic> dataNextDay) {
-    return OtherInfo(
-      fellLikeTemp: dataNextDay['current']['feels_like'].round(),
-      humidity: dataNextDay['current']['humidity'],
-      windDirection: dataNextDay['current']['wind_deg'],
-      uV: dataNextDay['current']['uvi'],
-      visibility: dataNextDay['current']['visibility'],
-      windSpeed: dataNextDay['current']['wind_speed'],
-    );
+  Future<Position> _getUserPosition() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+    }
+    var currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    return currentPosition;
   }
 }
