@@ -18,13 +18,9 @@ class RouteGenerator {
     final arg = settings.arguments;
     switch (settings.name) {
       case '/main_screen':
-        if (arg == null) {
           return MaterialPageRoute(
-            builder: (context) => MainScreen(
-              weather: arg,
-            ),
+            builder: (context) => MainScreen(),
           );
-        }
         return MaterialPageRoute(
           builder: (context) => _ErrorRoute(),
         );
@@ -63,7 +59,7 @@ class _ErrorRoute extends StatelessWidget {
       alignment: Alignment.center,
       color: Colors.red,
       child: const Text(
-        'Something has happened 3 times',
+        'Some error happened',
         style: TextStyle(
           color: Colors.white,
         ),

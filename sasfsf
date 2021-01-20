@@ -1,0 +1,134 @@
+[33mcommit 27baba9403c56f0c75339e116f00edda47443610[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Viet <avi261199@gmail.com>
+Date:   Fri Jan 15 16:41:25 2021 +0700
+
+    refactor and fix bugs
+
+[33mcommit 059df0dae01902121587ee547bda05e939e8933c[m
+Author: Viet <avi261199@gmail.com>
+Date:   Wed Jan 13 01:26:59 2021 +0700
+
+    pull down to refresh using provider
+
+[33mcommit 75d22cbd5d0cad3546fda13e781e4e6649fda25c[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 12 23:55:16 2021 +0700
+
+    delete old splash screen
+
+[33mcommit 78da2bf899d609e8ef378704deb8c0a59f689406[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 12 23:47:20 2021 +0700
+
+    fix bugs
+
+[33mcommit b0435ba4daa4c3aa1d871cde9d652fcc034ef486[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:53:08 2021 +0700
+
+    fix error screen
+
+[33mcommit 86e7d295908e22ec0bfcde312aa61055b4acb25f[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:47:54 2021 +0700
+
+    change to something happened
+
+[33mcommit 75b9491ae7c49900ca434ba3eb53927a085b61ea[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:45:27 2021 +0700
+
+    delete random class
+
+[33mcommit 0cdaf1b7e52a4b010bf89fd0c032066de5e02d22[m
+Merge: e6f0210 d10ce27
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:43:52 2021 +0700
+
+    Merge branch 'dev'
+
+[33mcommit d10ce27d6c8492a70735686eb79b67a4ebc21185[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:43:00 2021 +0700
+
+    test
+
+[33mcommit e6f02100116fb33c577af37fc5495cb48ff859c6[m
+Merge: 1e3def9 dcc451f
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:28:54 2021 +0700
+
+    Merge branch 'dev'
+
+[33mcommit dcc451f0f63a11f0019fd27dd065362e8f1758b2[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:28:40 2021 +0700
+
+    add random class
+
+[33mcommit d4d88ba94e04b7a40df5c205f39c8b2c960b4ddf[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 23:25:45 2021 +0700
+
+    change to 3 times
+
+[33mcommit 1e3def94c529ee9e86e4506d1fd9192da553eec8[m
+Merge: 6a65264 6ee7282
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 20:59:03 2021 +0700
+
+    test merge to dev
+
+[33mcommit 6a65264f0eff14572e639cd4550ef549d1fc4bdc[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 20:56:54 2021 +0700
+
+    a lot error
+
+[33mcommit 6ee728299e1f0f205d1a8265e5e69d029bf371d2[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Jan 5 20:52:07 2021 +0700
+
+    small change
+
+[33mcommit dfbb90a96ea1117c73d2a95bbe26317a507b3e2e[m
+Author: Viet <avi261199@gmail.com>
+Date:   Mon Jan 4 00:29:38 2021 +0700
+
+    done seven next days screen
+
+[33mcommit 01f3b66e7f1a499f3d24572a565db1d5a59939da[m
+Author: Viet <avi261199@gmail.com>
+Date:   Sat Jan 2 14:36:59 2021 +0700
+
+    done air screen
+
+[33mcommit 6be95e2e460847c5df55982271219bc280ff6653[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Dec 29 21:36:11 2020 +0700
+
+    fix icon
+
+[33mcommit 6dadb6df058707c990192246e3dfd5714dc141a4[m
+Author: Viet <avi261199@gmail.com>
+Date:   Tue Dec 29 01:06:16 2020 +0700
+
+    done weather additional info
+
+[33mcommit 2e0ed65bc16adc00bef04b0cabf11c59cda587ce[m
+Author: Viet <avi261199@gmail.com>
+Date:   Sun Dec 27 03:18:13 2020 +0700
+
+    fix bug
+
+[33mcommit cf959ba30416b1f1b1912c4e40bd8b53268db9a4[m
+Author: Viet <avi261199@gmail.com>
+Date:   Sun Dec 27 02:42:45 2020 +0700
+
+    change api call
+
+[33mcommit 91012d91b722a3a2ef5a3694b31968f34c6a578c[m
+Author: Viet <avi261199@gmail.com>
+Date:   Sat Dec 26 00:54:53 2020 +0700
+
+    first commit

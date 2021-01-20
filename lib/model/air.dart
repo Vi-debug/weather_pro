@@ -15,6 +15,16 @@ class Air {
       this.pm10,
       this.nH3});
 
+  Air.fromJson(Map<String, dynamic> json)
+    : nH3 = json['components']['nh3'],
+      cO = json['components']['co'],
+      nO2 = json['components']['no2'],
+      o3 =  json['components']['o3'],
+      sO2 =  json['components']['so2'],
+      pm2_5 = json['components']['pm2_5'],
+      pm10 = json['components']['pm10'],
+      overall = json['main']['aqi'];
+
   Widget getAirQualityWidget(double size) {
     airColor = getAirColor();
     switch (overall) {
@@ -111,4 +121,6 @@ class Air {
         return null;
     }
   }
+
+
 }

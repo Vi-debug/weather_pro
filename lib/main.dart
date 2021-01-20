@@ -63,8 +63,8 @@ class MyApp extends StatelessWidget {
               color: const Color.fromRGBO(255, 255, 255, 0.85)),
         ),
       ),
-      onGenerateRoute: RouteGenerator.generate,
       initialRoute: '/main_screen',
+      onGenerateRoute: RouteGenerator.generate,
     );
   }
 }
